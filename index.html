@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electro My ID. Studio Perancangan Elektronika</title>
+<meta name="description" content="Studio perancangan elektronika di Bandung. Tiga layanan: Custom Hardware, Rancang Design PCB, dan Rancang Design Skematik.">
+<meta property="og:title" content="Electro My ID. — Studio Perancangan Elektronika">
+<meta property="og:description" content="Custom Hardware, Rancang Design PCB, dan Rancang Design Skematik. Studio kecil di Bandung yang menangani desain elektronika dari arsitektur hingga file yang siap difabrikasi.">
+<meta property="og:image" content="https://electro.my.id/images/og-image.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Electro My ID. Studio Perancangan Elektronika">
+<meta property="og:url" content="https://electro.my.id">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Electro My ID. Studio">
+<meta property="og:locale" content="id_ID">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Electro My ID. — Studio Perancangan Elektronika">
+<meta name="twitter:description" content="Custom Hardware, Rancang Design PCB, dan Rancang Design Skematik.">
+<meta name="twitter:image" content="https://electro.my.id/images/og-image.jpg">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.13/dist/lenis.min.js"></script>
+
+<style>
+:root {
+  --bg: #ffffff;
+  --text: #000000;
+  --text-soft: rgba(0,0,0,0.7);
+  --text-mute: rgba(0,0,0,0.5);
+  --text-faint: rgba(0,0,0,0.3);
+  --line: rgba(0,0,0,0.12);
+  --line-strong: rgba(0,0,0,0.25);
+  --paper: #fafafa;
+
+  --serif: 'Times New Roman', 'Songti SC', serif;
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'PingFang SC', sans-serif;
+  --mono: ui-monospace, 'Cascadia Code', 'Source Code Pro', monospace;
+
+  --ease-quiet: cubic-bezier(.22, 1, .36, 1);
+  --ease-precise: cubic-bezier(.4, 0, .2, 1);
+  --ease-emphasis: cubic-bezier(.16, 1, .3, 1);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection { background: #000; color: #fff; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+
+/* ============ NAV ============ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+  transition: padding 400ms var(--ease-quiet);
+}
+.nav.scrolled { padding: 1rem 2rem; }
+
+.nav-brand {
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  line-height: 1;
+}
+.nav-brand sup {
+  font-size: 0.45em;
+  vertical-align: super;
+  font-family: var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-left: 0.3rem;
+  font-weight: 400;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-menu a {
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-soft);
+  transition: color 300ms var(--ease-quiet);
+  position: relative;
+}
+.nav-menu a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px; left: 0;
+  width: 0; height: 1px;
+  background: var(--text);
+  transition: width 400ms var(--ease-quiet);
+}
+.nav-menu a:hover { color: var(--text); }
+.nav-menu a:hover::after { width: 100%; }
+
+.nav-cta {
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text);
+  border-bottom: 1px solid var(--text);
+  padding-bottom: 3px;
+  transition: padding 300ms var(--ease-quiet);
+}
+.nav-cta:hover { padding-bottom: 6px; }
+
+/* ============ HERO ============ */
+.hero {
+  min-height: 100vh;
+  padding: 9rem 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+}
+
+.hero-eyebrow {
+  font-size: 0.74rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 3.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 600ms var(--ease-quiet), transform 600ms var(--ease-quiet);
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--text-mute);
+}
+.hero.is-in .hero-eyebrow { opacity: 1; transform: none; transition-delay: 0ms; }
+
+.hero-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 6vw, 5.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 18ch;
+  margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1200ms var(--ease-quiet), transform 1200ms var(--ease-quiet);
+  transition-delay: 180ms;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--text-soft);
+}
+.hero.is-in .hero-title { opacity: 1; transform: none; }
+
+.hero-sub {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-soft);
+  max-width: 52ch;
+  margin-bottom: 3.5rem;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 800ms var(--ease-quiet), transform 800ms var(--ease-quiet);
+  transition-delay: 360ms;
+}
+.hero.is-in .hero-sub { opacity: 1; transform: none; }
+
+.hero-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 700ms var(--ease-quiet), transform 700ms var(--ease-quiet);
+  transition-delay: 540ms;
+  flex-wrap: wrap;
+}
+.hero.is-in .hero-cta-row { opacity: 1; transform: none; }
+
+.hero-cta {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--text);
+  border-bottom: 1px solid var(--text);
+  padding-bottom: 4px;
+  transition: padding 300ms var(--ease-quiet);
+}
+.hero-cta:hover { padding-bottom: 8px; }
+
+.hero-cta-secondary {
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  transition: color 300ms var(--ease-quiet);
+}
+.hero-cta-secondary:hover { color: var(--text); }
+
+.hero-corner {
+  position: absolute;
+  top: 7rem;
+  right: 2rem;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-faint);
+  text-align: right;
+  line-height: 1.7;
+  opacity: 0;
+  transition: opacity 800ms var(--ease-quiet);
+  transition-delay: 900ms;
+}
+.hero.is-in .hero-corner { opacity: 1; }
+
+/* ============ SECTION COMMON ============ */
+section { padding: 8rem 2rem; position: relative; }
+.container { max-width: 1400px; margin: 0 auto; }
+.container-narrow { max-width: 860px; margin: 0 auto; }
+
+.section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.section-label::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--text-mute);
+}
+
+.section-headline {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2rem, 4.2vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 4rem;
+  max-width: 22ch;
+}
+.section-headline em { font-style: italic; color: var(--text-soft); }
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 1000ms var(--ease-quiet), transform 1000ms var(--ease-quiet);
+}
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* ============ MANIFESTO ============ */
+.manifesto {
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: 6rem 2rem;
+}
+.manifesto-grid {
+  display: grid;
+  grid-template-columns: 1fr 2.5fr;
+  gap: 4rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+.manifesto-aside {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  line-height: 1.9;
+}
+.manifesto-aside-line {
+  display: block;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 1rem;
+}
+.manifesto-body {
+  font-family: var(--serif);
+  font-size: clamp(1.3rem, 1.7vw, 1.6rem);
+  line-height: 1.55;
+  letter-spacing: -0.005em;
+}
+.manifesto-body em { font-style: italic; color: var(--text-soft); }
+
+/* ============ SERVICES ============ */
+.services {
+  padding: 8rem 2rem;
+}
+
+.services-intro {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 4rem;
+  margin-bottom: 6rem;
+  align-items: end;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.services-intro-text {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--text-soft);
+  max-width: 44ch;
+}
+
+.service-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: center;
+  margin-bottom: 7rem;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.service-item:last-child { margin-bottom: 0; }
+.service-item[data-reverse] [data-text] { order: 2; }
+
+.service-text {
+  display: flex;
+  flex-direction: column;
+}
+.service-text > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 900ms var(--ease-quiet), transform 900ms var(--ease-quiet);
+  transition-delay: calc(var(--i, 0) * 120ms);
+}
+.service-text.is-in > * { opacity: 1; transform: none; }
+
+.service-num {
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  color: var(--text-mute);
+  letter-spacing: 0.2em;
+  margin-bottom: 1.5rem;
+}
+
+.service-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 3.2vw, 2.8rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  margin-bottom: 0.5rem;
+}
+.service-title-en {
+  display: block;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 2rem;
+  font-weight: 400;
+}
+
+.service-lead {
+  font-size: 1.02rem;
+  line-height: 1.75;
+  color: var(--text-soft);
+  margin-bottom: 2.5rem;
+  max-width: 42ch;
+}
+.service-lead em { font-style: italic; color: var(--text); }
+
+.service-lists {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+.service-list-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--line);
+}
+.service-list-items {
+  list-style: none;
+}
+.service-list-items li {
+  font-size: 0.88rem;
+  line-height: 1.6;
+  color: var(--text-soft);
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--line);
+}
+.service-list-items li:last-child { border-bottom: none; }
+
+.service-rule {
+  width: 4rem;
+  height: 1px;
+  background: var(--text);
+  margin-top: 0.5rem;
+}
+
+.service-img {
+  aspect-ratio: 4/5;
+  overflow: hidden;
+  background: #efefef;
+  position: relative;
+}
+.service-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s var(--ease-emphasis);
+  filter: grayscale(0.15);
+}
+.service-item:hover .service-img img { transform: scale(1.03); filter: grayscale(0); }
+
+.service-img-tag {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #fff;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+  padding: 0.4rem 0.7rem;
+  line-height: 1.4;
+}
+
+/* ============ CONTACT ============ */
+.contact {
+  padding: 10rem 2rem 8rem;
+  background: var(--paper);
+  border-top: 1px solid var(--line);
+}
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: start;
+}
+.contact-headline {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(2.2rem, 4.8vw, 4.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 12ch;
+}
+.contact-headline em { font-style: italic; color: var(--text-soft); }
+
+.contact-info { padding-top: 1rem; }
+.contact-block {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+.contact-block:last-child { border-bottom: none; margin-bottom: 0; }
+.contact-block-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 0.85rem;
+}
+.contact-block-value {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  line-height: 1.5;
+}
+.contact-block-value a {
+  border-bottom: 1px solid var(--line);
+  transition: border-color 300ms var(--ease-quiet);
+}
+.contact-block-value a:hover { border-color: var(--text); }
+
+/* ============ FOOTER ============ */
+.footer {
+  padding: 4rem 2rem 2rem;
+  border-top: 1px solid var(--line);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2.2fr 1fr 1fr;
+  gap: 3rem;
+  max-width: 1400px;
+  margin: 0 auto 3rem;
+}
+.footer-brand {
+  font-family: var(--serif);
+  font-size: 2.2rem;
+  margin-bottom: 1.25rem;
+  line-height: 1;
+}
+.footer-brand sup {
+  font-size: 0.4em;
+  vertical-align: super;
+  font-family: var(--sans);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-left: 0.3rem;
+}
+.footer-tagline {
+  font-size: 0.92rem;
+  color: var(--text-soft);
+  max-width: 36ch;
+  line-height: 1.65;
+}
+.footer-col h4 {
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-mute);
+  margin-bottom: 1.5rem;
+  font-weight: 400;
+}
+.footer-col ul { list-style: none; }
+.footer-col li {
+  margin-bottom: 0.65rem;
+  font-size: 0.92rem;
+}
+.footer-col a {
+  color: var(--text);
+  transition: opacity 300ms var(--ease-quiet);
+}
+.footer-col a:hover { opacity: 0.5; }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  font-size: 0.72rem;
+  color: var(--text-mute);
+  letter-spacing: 0.08em;
+  max-width: 1400px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.footer-bottom span { font-family: var(--mono); }
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 1024px) {
+  .nav-menu { display: none; }
+
+  .hero { padding: 7rem 1.5rem 3rem; }
+  .hero-corner { display: none; }
+
+  .manifesto-grid { grid-template-columns: 1fr; gap: 2rem; }
+
+  .services-intro { grid-template-columns: 1fr; gap: 2rem; }
+
+  .service-item { grid-template-columns: 1fr; gap: 2.5rem; margin-bottom: 5rem; }
+  .service-item[data-reverse] [data-text] { order: 0; }
+  .service-img { aspect-ratio: 16/10; }
+
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+
+  .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+}
+
+@media (max-width: 640px) {
+  section { padding: 5rem 1.5rem; }
+  .manifesto { padding: 4rem 1.5rem; }
+
+  .service-lists { grid-template-columns: 1fr; gap: 1.5rem; }
+
+  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#beranda" class="nav-brand">Sirkuit.<sup>Studio</sup></a>
+  <ul class="nav-menu">
+    <li><a href="#custom-hardware">Custom Hardware</a></li>
+    <li><a href="#rancang">PCB Design</a></li>
+    <li><a href="#skematik">Schematic Design</a></li>
+  </ul>
+  <a href="#kontak" class="nav-cta">Hubungi Kami</a>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="beranda">
+  <div class="hero-corner">
+  </div>
+
+  <div class="hero-eyebrow">
+    Electro My ID (dahulu Analog71 Bandung) — Studio Perancangan Elektronika, sejak 2009
+  </div>
+
+  <h1 class="hero-title">
+    Custom Hardware, Rancang Design PCB, dan Rancang Design Skematik, <em> tiga layanan, satu studio.</em>
+  </h1>
+
+  <p class="hero-sub">
+    Electro My ID (dahulu Analog71 Bandung) adalah Studio di Bandung yang menangani desain elektronika dari arsitektur hingga file yang siap dikirim ke pabrik fabrikasi. 
+    Kami bekerja dengan tim produk, peneliti, dan perusahaan yang membutuhkan ketelitian di setiap lapisan.
+  </p>
+
+  <div class="hero-cta-row">
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services" id="posisi">
+  <div class="services-intro">
+    <div>
+      <div class="section-label reveal">Layanan</div>
+      <h2 class="section-headline reveal">Tiga bidang kerja, <em>satu</em> cara kerja.</h2>
+    </div>
+    <p class="services-intro-text reveal">
+      Setiap layanan dapat dipesan terpisah, atau sebagai satu paket utuh
+      dari arsitektur hingga file yang siap difabrikasi. Yang kami serahkan bukan hanya hasil akhir, melainkan juga dokumen yang dapat dibangun ulang.
+    </p>
+  </div>
+
+  <!-- Service 01 — Custom Hardware -->
+  <div class="service-item">
+    <div data-text>
+      <div class="service-text">
+        <div class="service-num" style="--i:0">Layanan 01 / 03</div>
+        <h3 class="service-title" style="--i:1" id="custom-hardware">Custom Hardware</h3>
+        <span class="service-title-en" style="--i:1">Perancangan Keras Kustom</span>
+        <p class="service-lead" style="--i:2">
+          Setiap produk dimulai dari pertanyaan yang sama, apa yang harus diukur, apa yang harus dilakukan, dan apa yang harus dipegang. 
+          Kami membangun <em>arsitektur sistem</em> dari pertanyaan itu, bukan dari komponen yang kebetulan tersedia di stok.
+          Apapun kebutuhan DIY anda, kami dapat membantu merancangnya dari awal hingga produksi, 
+          atau sekadar memberikan konsultasi teknis untuk proyek yang sudah berjalan. 
+          Kami bekerja sama dengan Elecrow sejak 2017 untuk memproduksi papan sirkuit cetak dan merakitnya menjadi produk jadi,
+          tidak menutup kemungkinan juga jika anda ingin menggunakan jasa fabrikasi lain seperti JLCPCB, PCBWay, atau pabrik lokal di Indonesia.
+
+        </p>
+        <div class="service-lists" style="--i:3">
+          <div>
+            <div class="service-list-label">Yang termasuk</div>
+            <ul class="service-list-items">
+              <li>Arsitektur sistem dan diagram blok</li>
+              <li>Pemilihan komponen dengan analisis datasheet</li>
+              <li>Analisis daya, termal, dan EMC</li>
+              <li>Spesifikasi antarmuka dan protokol</li>
+              <li>Dokumen arsitektur tertulis</li>
+            </ul>
+          </div>
+          <div>
+            <div class="service-list-label">Yang diserahkan</div>
+            <ul class="service-list-items">
+              <li>Dokumen arsitektur sistem</li>
+              <li>Daftar komponen dengan justifikasi</li>
+              <li>Diagram blok dan deskripsi fungsi</li>
+              <li>Estimasi daya dan anggaran termal</li>
+              <li>Catatan keputusan desain</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-rule" style="--i:4"></div>
+      </div>
+    </div>
+    <div class="service-img">
+      <span class="service-img-tag">01 — Hardware</span>
+      <img src="images/factory.jpg" alt="PCB kustom">
+    </div>
+  </div>
+
+  <!-- Service 02 — Rancang Design PCB -->
+  <div class="service-item" data-reverse>
+    <div data-text>
+      <div class="service-text">
+        <div class="service-num" style="--i:0">Layanan 02 / 03</div>
+        <h3 class="service-title" style="--i:1" id="rancang">Rancang Design PCB</h3>
+        <span class="service-title-en" style="--i:1">Tata Letak Papan Sirkuit Cetak</span>
+        <p class="service-lead" style="--i:2">
+          Jalur tembaga adalah <em>tata kota</em>. Penempatan komponen menentukan segalanya, 
+          dari mulai route sinyal sensitif, bidang daya, bidang ground, dan jalur lainnya dipertimbangkan bersamaan, 
+          dengan iterasi yang terukur dan dapat ditelusuri.
+        </p>
+        <div class="service-lists" style="--i:3">
+          <div>
+            <div class="service-list-label">Yang termasuk</div>
+            <ul class="service-list-items">
+              <li>Tata letak 1 hingga 8 lapis</li>
+              <li>Route diferensial dan impedansi terkontrol</li>
+              <li>Audit DFM (Design for Manufacturing)</li>
+              <li>Audit DFT (Design for Test)</li>
+              <li>Penataan komponen dan optimasi placement</li>
+            </ul>
+          </div>
+          <div>
+            <div class="service-list-label">Yang diserahkan</div>
+            <ul class="service-list-items">
+              <li>File Gerber lengkap</li>
+              <li>File pick-and-place</li>
+              <li>File drill dan rout</li>
+              <li>Dokumentasi lapisan dan stackup</li>
+              <li>Catatan fabrikasi dan assembly</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-rule" style="--i:4"></div>
+      </div>
+    </div>
+    <div class="service-img">
+      <span class="service-img-tag">02 — PCB</span>
+      <img src="images/pcbs.jpg" alt="Tata letak PCB">
+    </div>
+  </div>
+
+  <!-- Service 03 — Rancang Design Skematik -->
+  <div class="service-item">
+    <div data-text>
+      <div class="service-text">
+        <div class="service-num" style="--i:0">Layanan 03 / 03</div>
+        <h3 class="service-title" style="--i:1" id="skematik">Rancang Design Skematik</h3>
+        <span class="service-title-en" style="--i:1">Penyusunan Skematik Elektronika</span>
+        <p class="service-lead" style="--i:2">
+          Skematik adalah <em>kontrak</em>. Bukan hanya koneksi yang benar, tetapi dokumen yang dapat dibaca manusia — dengan netlist tertib, label yang jelas, dan catatan yang menjelaskan keputusan desain kepada siapa pun yang membacanya lima tahun lagi.
+        </p>
+        <div class="service-lists" style="--i:3">
+          <div>
+            <div class="service-list-label">Yang termasuk</div>
+            <ul class="service-list-items">
+              <li>Penyusunan skematik dari arsitektur</li>
+              <li>Netlist tertib dengan penamaan konsisten</li>
+              <li>BOM yang dapat ditelusuri ke datasheet</li>
+              <li>Catatan desain untuk fabrikasi</li>
+              <li>Peninjauan desain pihak ketiga</li>
+            </ul>
+          </div>
+          <div>
+            <div class="service-list-label">Yang diserahkan</div>
+            <ul class="service-list-items">
+              <li>File skematik (KiCad / Altium)</li>
+              <li>BOM dengan referensi datasheet</li>
+              <li>Catatan desain dan justifikasi</li>
+              <li>Netlist terverifikasi</li>
+              <li>PDF skematik dapat dibaca manusia</li>
+            </ul>
+          </div>
+        </div>
+        <div class="service-rule" style="--i:4"></div>
+      </div>
+    </div>
+    <div class="service-img">
+      <span class="service-img-tag">03 — Skematik</span>
+      <img src="images/disasembling.jpg" alt="Skematik elektronika">
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="kontak">
+  <div class="container">
+    <div class="section-label reveal">Kontak — N°03</div>
+  </div>
+
+  <div class="contact-grid">
+    <h2 class="contact-headline reveal">
+      Hubungi <em> Kami</em>.
+    </h2>
+
+    <div class="contact-info reveal reveal-delay-1">
+      <div class="contact-block">
+        <div class="contact-block-label">Surel</div>
+        <div class="contact-block-value">
+          <a href="mailto:halo@sirkuit.studio">mcuelectro@gmail.com</a>
+        </div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-label">Lokasi</div>
+        <div class="contact-block-value">
+          Jl. Buah Batu 176 <br>Bandung, Jawa Barat, Indonesia
+        </div>
+      </div>
+      <div class="contact-block">
+        <div class="contact-block-label">Whatsapp</div>
+        <div class="contact-block-value">
+          Senin — Sabtu<br>09.30 — 17.30 WIB
+        </div>
+        <div class="contact-block-value">
+          +62 817-six-one-six-one-80
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand">Electro My ID.<sup>Studio</sup></div>
+      <p class="footer-tagline">
+        Electro My ID d.h. Analog 71 Bandung. Custom Hardware, Rancang Design PCB, dan Rancang Design Skematik.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>Layanan</h4>
+      <ul>
+        <li><a href="#custom-hardware">Custom Hardware</a></li>
+        <li><a href="#rancang">Rancang Design PCB</a></li>
+        <li><a href="#skematik">Rancang Design Skematik</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Navigasi</h4>
+      <ul>
+        <li><a href="#beranda">Beranda</a></li>
+        <li><a href="#posisi">Studio</a></li>
+        <li><a href="#layanan">Layanan</a></li>
+        <li><a href="#kontak">Kontak</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2024 Electro My ID. Studio</span>
+    <span>Bandung</span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  'use strict';
+
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ===== Lenis smooth scroll =====
+  if (typeof Lenis !== 'undefined' && !prefersReduced) {
+    const lenis = new Lenis({
+      duration: 1.15,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener('click', function(e) {
+        const targetId = this.getAttribute('href');
+        if (targetId.length > 1) {
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            lenis.scrollTo(target, { offset: -60, duration: 1.4 });
+          }
+        }
+      });
+    });
+  }
+
+  // ===== Nav scrolled state =====
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 40) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }, { passive: true });
+
+  // ===== Hero entrance =====
+  function triggerHero() {
+    const hero = document.querySelector('.hero');
+    if (hero) hero.classList.add('is-in');
+  }
+  window.addEventListener('load', () => requestAnimationFrame(triggerHero));
+  if (document.readyState === 'complete') requestAnimationFrame(triggerHero);
+
+  // ===== Generic reveal =====
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // ===== Service text stagger + image clip reveal =====
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined' && !prefersReduced) {
+    gsap.registerPlugin(ScrollTrigger);
+
+    document.querySelectorAll('.service-text').forEach(textCol => {
+      Array.from(textCol.children).forEach((child, i) => {
+        if (!child.style.getPropertyValue('--i')) {
+          child.style.setProperty('--i', i);
+        }
+      });
+      ScrollTrigger.create({
+        trigger: textCol,
+        start: 'top 82%',
+        once: true,
+        onEnter: () => textCol.classList.add('is-in')
+      });
+    });
+
+    document.querySelectorAll('.service-img').forEach(imgWrap => {
+      const img = imgWrap.querySelector('img');
+      if (!img) return;
+      gsap.set(img, { clipPath: 'inset(100% 0 0 0)' });
+      ScrollTrigger.create({
+        trigger: imgWrap,
+        start: 'top 85%',
+        once: true,
+        onEnter: () => gsap.to(img, {
+          clipPath: 'inset(0% 0 0 0)',
+          duration: 1.4,
+          ease: 'power3.out'
+        })
+      });
+    });
+  } else {
+    document.querySelectorAll('.service-text').forEach(textCol => {
+      const obs = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-in');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.2 });
+      obs.observe(textCol);
+    });
+  }
+})();
+</script>
+
+</body>
+</html>
